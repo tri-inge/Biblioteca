@@ -5,7 +5,6 @@
  */
 package com.ingenieria.biblioteca.web;
 
-import com.ingenieria.biblioteca.controlador.EdificioJpaController;
 import com.ingenieria.biblioteca.controlador.SalaculturalJpaController;
 import com.ingenieria.biblioteca.modelo.Edificio;
 import com.ingenieria.biblioteca.modelo.PersistenceUtil;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
+import com.ingenieria.biblioteca.controlador.EdificioJpaController;
 
 /**
  *
@@ -29,6 +29,7 @@ public class SalaculturalController {
     EdificioJpaController jpa2;
     List<Edificio> edificios;
     Edificio edificio;
+    int tmpid;
 
     /**
      * Creates a new instance of SalaController
@@ -62,12 +63,20 @@ public class SalaculturalController {
         return lista;
     }
 
+    public int getTmpid() {
+        return tmpid;
+    }
+
+    public void setTmpid(int tmpid) {
+        this.tmpid = tmpid;
+    }
+    
     public void setLista(List<Salacultural> lista) {
         this.lista = lista;
     }
 
     public void guardar() {
-        salacultural.setIdedificio(edificio);
+        salacultural.setIdedificio(jpa2.findEdificio(tmpid));
         jpa.guardar(salacultural);
         lista = jpa.findSalaculturalEntities();
     }
