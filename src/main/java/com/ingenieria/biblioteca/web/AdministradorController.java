@@ -9,11 +9,18 @@ package com.ingenieria.biblioteca.web;
 import com.ingenieria.biblioteca.controlador.AdministradorJpaController;
 import com.ingenieria.biblioteca.modelo.Administrador;
 import com.ingenieria.biblioteca.modelo.PersistenceUtil;
+import com.ingenieria.biblioteca.lib.Mailer;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -24,6 +31,7 @@ import javax.enterprise.context.Dependent;
 public class AdministradorController {
     AdministradorJpaController jpa;
     Administrador administrador ;
+    private List<Administrador> lista;    
     
     /**
      * Creates a new instance of AdministradorController
@@ -78,9 +86,9 @@ public class AdministradorController {
                         System.err.println("Error");
                         if (mat1.matches()) {
                             System.err.println("Numero de trabajador valido Encontrado.");
-                            jpa.guardar(profesor);
+                            jpa.guardar(administrador);
                             lista = jpa.findAdministradorEntities();
-                            String[] params = {"biopractice20191@gmail.com", "Biopractice1234", profesor.getCorreo(), "smtp.gmail.com", "587", "Confirma tu correo", "<a href='localhost:8084/biblioteca'></a>"};
+                            String[] params = {"biopractice20191@gmail.com", "Biopractice1234", administrador.getCorreo(), "smtp.gmail.com", "587", "Confirma tu correo", "<a href='localhost:8084/biblioteca'></a>"};
                             new Mailer().envia(params);
                             redirecciona("/index.xhtml");
                             return true;
@@ -103,6 +111,48 @@ public class AdministradorController {
     }
     public void registra() {
         registrarAdministrador();
-    }   
+    }
+    
+    
+
+    private void redirecciona(String direccion) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
+        String contextPath = origRequest.getContextPath();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .redirect(contextPath + direccion);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void muestraMensaje(String mensaje) {
+        FacesMessage mensajeFace = new FacesMessage(mensaje);
+        RequestContext.getCurrentInstance().showMessageInDialog(mensajeFace);
+    }
+
+    public List<String> getCorreos() {
+
+        List<String> correosList = new ArrayList<>();
+
+        for (Administrador alumn : lista) {
+            correosList.add(alumn.getCorreo());
+        }
+
+        return correosList;
+    }
+
+    public boolean correoExistente(String correo) {
+
+        List<String> correos = getCorreos();
+
+        for (String email : correos) {
+            if (correo.equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }    
     
 }
