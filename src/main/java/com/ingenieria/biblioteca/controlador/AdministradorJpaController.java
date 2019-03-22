@@ -135,4 +135,31 @@ public class AdministradorJpaController implements Serializable {
         }
     }
     
+      public void guardar(Administrador admin){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.persist(admin);
+	em.getTransaction().commit();
+        em.close();
+    }
+   
+    public void modificar(Administrador admin){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.merge(admin);
+	em.getTransaction().commit();
+        em.close();
+    }
+    
+    public void eliminar(Administrador admin){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.remove(em.merge(admin));
+	em.getTransaction().commit();
+        em.close();
+    }
+    
+    
+    
+    
 }
