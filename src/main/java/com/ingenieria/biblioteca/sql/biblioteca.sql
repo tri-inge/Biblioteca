@@ -7,6 +7,9 @@
 
 -- Started on 2019-03-17 17:38:29 CST
 
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -318,11 +321,6 @@ ALTER TABLE ONLY public.salacultural ALTER COLUMN idsala SET DEFAULT nextval('pu
 -- TOC entry 2998 (class 0 OID 32992)
 -- Dependencies: 197
 -- Data for Name: administrador; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.administrador (idadministrador, nombre, correo, contrasena, num_trabajador) FROM stdin;
-1	alex	alex.hdz.c@ciencias.unam.mx	123456789	313006636
-\.
 
 
 --
@@ -331,45 +329,6 @@ COPY public.administrador (idadministrador, nombre, correo, contrasena, num_trab
 -- Data for Name: edificio; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.edificio (idedificio, nombreedificio) FROM stdin;
-\.
-
-
---
--- TOC entry 3007 (class 0 OID 33044)
--- Dependencies: 206
--- Data for Name: espaciocultural; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.espaciocultural (idevento, idsala, fehca, nombreevento, hora) FROM stdin;
-\.
-
-
---
--- TOC entry 3000 (class 0 OID 33003)
--- Dependencies: 199
--- Data for Name: profesor; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.profesor (idprofesor, nombre, correo, departamento, tipoprof, contrasena, num_trabajador, activo) FROM stdin;
-1	Alexis Hernandez Castro	alex@ciencias.unam.mx	Ciencias de la Computacion	A	123456789	313006636	t
-2	Hector Montes Alvarez	hex@ciencias.unam.mx	Ciencias de la Computacion	B	123456789	313006637	t
-3	Alexis Hernandez Castro	alexis@ciencias.unam.mx	Ciencias de la Computacion	C	123456789	313006636	f
-4	Alexis Hernandez Castro	ale@ciencias.unam.mx	Biologia	D	123456789	1231546	f
-\.
-
-
---
--- TOC entry 3004 (class 0 OID 33026)
--- Dependencies: 203
--- Data for Name: salacultural; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.salacultural (idsala, nombresala, idedificio) FROM stdin;
-\.
-
-
---
 -- TOC entry 3022 (class 0 OID 0)
 -- Dependencies: 196
 -- Name: administrador_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
