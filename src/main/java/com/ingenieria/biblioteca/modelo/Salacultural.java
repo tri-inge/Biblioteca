@@ -70,6 +70,7 @@ public class Salacultural implements Serializable {
     public Integer getIdsala() {
         return idsala;
     }
+    
 
     public void setIdsala(Integer idsala) {
         this.idsala = idsala;
@@ -85,7 +86,13 @@ public class Salacultural implements Serializable {
 
     public Edificio getIdedificio() {
         return idedificio;
+        
     }
+    
+    public String getidEdificio(Edificio e){
+        return e.getNombreedificio();
+    }
+    
 
     public void setIdedificio(Edificio idedificio) {
         this.idedificio = idedificio;

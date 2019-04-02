@@ -17,6 +17,7 @@ com/ingenieria/biblioteca/modelo/Administrador.class
 com/ingenieria/biblioteca/controlador/SalaculturalJpaController.class
 com/ingenieria/biblioteca/modelo/Salacultural_.class
 com/ingenieria/biblioteca/modelo/Administrador_.class
+com/ingenieria/biblioteca/web/EspacioCuluralController.class
 com/ingenieria/biblioteca/web/SalaculturalController.class
 com/ingenieria/biblioteca/modelo/Edificio.class
 com/ingenieria/biblioteca/web/EdificioController.class

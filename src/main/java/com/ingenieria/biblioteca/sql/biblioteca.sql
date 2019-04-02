@@ -128,9 +128,12 @@ ALTER SEQUENCE public.edificio_id_seq OWNED BY public.edificio.idedificio;
 CREATE TABLE public.espaciocultural (
     idevento integer NOT NULL,
     idsala integer NOT NULL,
-    fehca date NOT NULL,
+    fecha date NOT NULL,
     nombreevento text NOT NULL,
-    hora time without time zone NOT NULL
+    horaInicio time without time zone NOT NULL,
+    horaFinal time without time zone NOT NULL,
+    reservado boolean DEFAULT false NOT NULL 
+
 );
 
 

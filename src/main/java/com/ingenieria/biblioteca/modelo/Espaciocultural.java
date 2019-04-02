@@ -6,6 +6,7 @@
 package com.ingenieria.biblioteca.modelo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -34,9 +35,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Espaciocultural.findAll", query = "SELECT e FROM Espaciocultural e")
     , @NamedQuery(name = "Espaciocultural.findByIdevento", query = "SELECT e FROM Espaciocultural e WHERE e.idevento = :idevento")
-    , @NamedQuery(name = "Espaciocultural.findByFehca", query = "SELECT e FROM Espaciocultural e WHERE e.fehca = :fehca")
+    , @NamedQuery(name = "Espaciocultural.findByFecha", query = "SELECT e FROM Espaciocultural e WHERE e.fecha = :fecha")
     , @NamedQuery(name = "Espaciocultural.findByNombreevento", query = "SELECT e FROM Espaciocultural e WHERE e.nombreevento = :nombreevento")
-    , @NamedQuery(name = "Espaciocultural.findByHora", query = "SELECT e FROM Espaciocultural e WHERE e.hora = :hora")})
+    , @NamedQuery(name = "Espaciocultural.findByHorainicio", query = "SELECT e FROM Espaciocultural e WHERE e.horainicio = :horainicio")
+    , @NamedQuery(name = "Espaciocultural.findByHorafinal", query = "SELECT e FROM Espaciocultural e WHERE e.horafinal = :horafinal")
+    , @NamedQuery(name = "Espaciocultural.findByReservado", query = "SELECT e FROM Espaciocultural e WHERE e.reservado = :reservado")})
 public class Espaciocultural implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,9 +50,9 @@ public class Espaciocultural implements Serializable {
     private Integer idevento;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fehca")
+    @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
-    private Date fehca;
+    private Date fecha;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -57,13 +60,25 @@ public class Espaciocultural implements Serializable {
     private String nombreevento;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "hora")
+    @Column(name = "horainicio")
     @Temporal(TemporalType.TIME)
-    private Date hora;
+    private Date horainicio;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "horafinal")
+    @Temporal(TemporalType.TIME)
+    private Date horafinal;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "reservado")
+    private boolean reservado;
     @JoinColumn(name = "idsala", referencedColumnName = "idsala")
     @ManyToOne(optional = false)
     private Salacultural idsala;
+    
+    
 
+    
     public Espaciocultural() {
     }
 
@@ -71,11 +86,13 @@ public class Espaciocultural implements Serializable {
         this.idevento = idevento;
     }
 
-    public Espaciocultural(Integer idevento, Date fehca, String nombreevento, Date hora) {
+    public Espaciocultural(Integer idevento, Date fecha, String nombreevento, Date horainicio, Date horafinal, boolean reservado) {
         this.idevento = idevento;
-        this.fehca = fehca;
+        this.fecha = fecha;
         this.nombreevento = nombreevento;
-        this.hora = hora;
+        this.horainicio = horainicio;
+        this.horafinal = horafinal;
+        this.reservado = reservado;
     }
 
     public Integer getIdevento() {
@@ -86,12 +103,12 @@ public class Espaciocultural implements Serializable {
         this.idevento = idevento;
     }
 
-    public Date getFehca() {
-        return fehca;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFehca(Date fehca) {
-        this.fehca = fehca;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public String getNombreevento() {
@@ -102,18 +119,38 @@ public class Espaciocultural implements Serializable {
         this.nombreevento = nombreevento;
     }
 
-    public Date getHora() {
-        return hora;
+    public Date getHorainicio() {
+        return horainicio;
     }
 
-    public void setHora(Date hora) {
-        this.hora = hora;
+    public void setHorainicio(Date horainicio) {
+        this.horainicio = horainicio;
+    }
+
+    public Date getHorafinal() {
+        return horafinal;
+    }
+
+    public void setHorafinal(Date horafinal) {
+        this.horafinal = horafinal;
+    }
+
+    public boolean getReservado() {
+        return reservado;
+    }
+
+    public void setReservado(boolean reservado) {
+        this.reservado = reservado;
     }
 
     public Salacultural getIdsala() {
         return idsala;
     }
 
+    public String getidSala(Salacultural s){
+        return s.getNombresala();
+    }
+    
     public void setIdsala(Salacultural idsala) {
         this.idsala = idsala;
     }
@@ -141,6 +178,19 @@ public class Espaciocultural implements Serializable {
     @Override
     public String toString() {
         return "com.ingenieria.biblioteca.modelo.Espaciocultural[ idevento=" + idevento + " ]";
+    }
+    
+    public String formatDate(Date d){
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+        
+        return formatDate.format(d);
+        
+    }
+ 
+    public String formaTime(Date d){
+        SimpleDateFormat formatTime = new SimpleDateFormat("hh:mm:ss");
+        return formatTime.format(d);
+        
     }
     
 }

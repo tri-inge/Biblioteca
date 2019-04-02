@@ -9,11 +9,12 @@ import com.ingenieria.biblioteca.controlador.SalaculturalJpaController;
 import com.ingenieria.biblioteca.modelo.Edificio;
 import com.ingenieria.biblioteca.modelo.PersistenceUtil;
 import com.ingenieria.biblioteca.modelo.Salacultural;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import com.ingenieria.biblioteca.controlador.EdificioJpaController;
+import javax.faces.application.FacesMessage;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -41,6 +42,7 @@ public class SalaculturalController {
         jpa2 = new EdificioJpaController(PersistenceUtil.getEntityManagerFactory());
         edificios = jpa2.findEdificioEntities();
         edificio = new Edificio();
+        tmpid = 0;
     }
 
     public SalaculturalJpaController getJpa() {
@@ -70,17 +72,40 @@ public class SalaculturalController {
     public void setTmpid(int tmpid) {
         this.tmpid = tmpid;
     }
-    
+
     public void setLista(List<Salacultural> lista) {
         this.lista = lista;
     }
 
     public void guardar() {
-        salacultural.setIdedificio(jpa2.findEdificio(tmpid));
-        jpa.guardar(salacultural);
+        
+        System.err.println("=======================Hola=============================");
+        
+        if (existeEdificio(tmpid)) {
+            salacultural.setIdedificio(jpa2.findEdificio(tmpid));
+            jpa.guardar(salacultural);
+            System.err.println("Hola");
+        } else {
+            muestraMensaje("El edificio no exitse con el identifiador: " + tmpid);
+
+        }
+
         lista = jpa.findSalaculturalEntities();
     }
 
+    public boolean existeEdificio(int id) {
 
+        for (Edificio e : edificios) {
+            if (e.getIdedificio().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void muestraMensaje(String mensaje) {
+        FacesMessage mensajeFace = new FacesMessage(mensaje);
+        RequestContext.getCurrentInstance().showMessageInDialog(mensajeFace);
+    }
+    
 }

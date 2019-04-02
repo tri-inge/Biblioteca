@@ -164,5 +164,29 @@ public class EspacioculturalJpaController implements Serializable {
             em.close();
         }
     }
+      
+        public void guardar(Espaciocultural e){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.persist(e);
+	em.getTransaction().commit();
+        em.close();
+    }
+   
+    public void modificar(Espaciocultural e){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.merge(e);
+	em.getTransaction().commit();
+        em.close();
+    }
+    
+    public void eliminar(Espaciocultural e){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.remove(em.merge(e));
+	em.getTransaction().commit();
+        em.close();
+    }
     
 }

@@ -19,20 +19,26 @@
                             <p:inputText id="nombreEvento" required="true" requiredMessage="Rellenar campo" value="#{espacioCuluralController.espacio.nombreevento}"/>
 
                             <h:outputLabel for="Id de la sala" value="Nombre de la sala:"  />
-                            <p:inputText id="IdSala" required="true" requiredMessage="Rellenar campo" value="#{espacioCuluralController.espacio.idsala}"/>
+                            <p:inputText id="IdSala" required="true" requiredMessage="Rellenar campo" value="#{espacioCuluralController.tmpSala}"/>
 
                             <p:outputLabel for="event" value="Select Event:" />
-                            <p:calendar id="event" value="#{espacioCuluralController.espacio.fehca}">
+                            <p:calendar id="event" value="#{espacioCuluralController.espacio.fecha}">
                                 <p:ajax event="dateSelect" listener="#{espacioCuluralController.onDateSelect}"  />
                             </p:calendar>
 
-                            <p:outputLabel for="time" value="Time:" />
-                            <p:calendar id="time" value="#{espacioCuluralController.espacio.hora}" pattern="HH:mm" timeOnly="true"  />
+                            <p:outputLabel for="time" value="Hora Inicio:" />
+                            <p:calendar id="time" value="#{espacioCuluralController.espacio.horainicio}" pattern="HH:mm" timeOnly="true"  />
+
+                            <p:outputLabel for="time2" value="Hora Final:" />
+                            <p:calendar id="time2" value="#{espacioCuluralController.espacio.horafinal}" pattern="HH:mm" timeOnly="true"  />
 
                         </h:panelGrid> 
-                        <p:commandButton value="Reservar" />
-
-                    </h:form>
+                        
+                        <p:commandButton value="Reservar" action="#{espacioCuluralController.reserva()}" />
+       
+               
+                       
+                        </h:form>
 
                 </h:body>
             </center>
@@ -40,18 +46,6 @@
     </ui:composition>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
